@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.huawei.dao.OA_UserMapper" >
+	<!-- 配置用户与任务的多对多关联 -->
+	<resultMap type="OA_User" id="OA_UserMap">
+        <id column="user_id" property="userId"/>
+        <result column="user_name" property="userName" jdbcType="CHAR" />
+	    <result column="user_pwd" property="userPwd" jdbcType="CHAR" />
+	    <result column="user_gender" property="userGender" jdbcType="INTEGER" />
+	    <result column="user_birth" property="userBirth" jdbcType="DATE" />
+	    <result column="user_deptid" property="userDeptid" jdbcType="INTEGER" />
+	    <result column="user_mobile" property="userMobile" jdbcType="CHAR" />
+	    <result column="user_role" property="userRole" jdbcType="INTEGER" />
+	    <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+	    <result column="user_imgpath" property="userImgpath" jdbcType="CHAR" />
+	    <result column="user_mz" property="userMz" jdbcType="CHAR" />
+	    <result column="user_jg" property="userJg" jdbcType="CHAR" />
+	    <result column="user_marrige" property="userMarrige" jdbcType="CHAR" />
+	    <result column="user_address" property="userAddress" jdbcType="CHAR" />
+	    <result column="user_xl" property="userXl" jdbcType="CHAR" />
+	    <result column="user_school" property="userSchool" jdbcType="CHAR" />
+	    <result column="user_zy" property="userZy" jdbcType="CHAR" />
+	    <result column="user_joinwork" property="userJoinwork" jdbcType="DATE" />
+	    <result column="user_email" property="userEmail" jdbcType="CHAR" />
+	    <result column="user_joincompany" property="userJoincompany" jdbcType="DATE" />
+	    <result column="user_phone" property="userPhone" jdbcType="CHAR" />
+	    <result column="user_zzmm" property="userZzmm" jdbcType="CHAR" />
+	    <result column="user_joinparty" property="userJoinparty" jdbcType="DATE" />
+	    <result column="user_partyplace" property="userPartyplace" jdbcType="CHAR" />
+	    <result column="user_glxs" property="userGlxs" jdbcType="CHAR" />
+	    <result column="user_insurance" property="userInsurance" jdbcType="INTEGER" />
+	    <result column="user_insurancetype" property="userInsurancetype" jdbcType="CHAR" />
+	    <result column="user_homeaddress" property="userHomeaddress" jdbcType="CHAR" />
+	    <result column="user_lxr" property="userLxr" jdbcType="CHAR" />
+	    <result column="user_homephone" property="userHomephone" jdbcType="CHAR" />
+	    
+		<collection property="oa_tasks"   ofType="OA_Task" column="user_Id" select="getOA_Tasks">
+		    <!-- <id column="task_id" property="taskId" jdbcType="INTEGER" />
+		    <result column="task_time" property="taskTime" jdbcType="DATE" />
+		    <result column="task_content" property="taskContent" jdbcType="CHAR" />
+		    <result column="task_fromuser" property="taskFromuser" jdbcType="INTEGER" />
+		    <result column="task_limit" property="taskLimit" jdbcType="DATE" /> -->
+ 		</collection>
+    </resultMap>
+   	 <resultMap type="OA_Task" id="AAA">
+   		<id column="task_id" property="taskId" jdbcType="INTEGER" />
+		    <result column="task_time" property="taskTime" jdbcType="DATE" />
+		    <result column="task_content" property="taskContent" jdbcType="CHAR" />
+		    <result column="task_fromuser" property="taskFromuser" jdbcType="INTEGER" />
+		    <result column="task_limit" property="taskLimit" jdbcType="DATE" />
+   	</resultMap>
+    <select id="getOA_Users" resultMap="OA_UserMap">
+        select 	<include refid="Base_Column_List" /> from OA_User
+    </select>
+    <select id="getOA_Tasks"  parameterType="int" resultMap="AAA">
+        select 	task_id,task_time,task_content,task_fromuser,task_limit from OA_Task where task_id in (select taskuser_taskid from oa_taskuser where taskuser_userid=#{id})
+    </select>
+    
+    <!-- 结束 -->
+  <resultMap id="BaseResultMap" type="OA_User" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="CHAR" />
+    <result column="user_pwd" property="userPwd" jdbcType="CHAR" />
+    <result column="user_gender" property="userGender" jdbcType="INTEGER" />
+    <result column="user_birth" property="userBirth" jdbcType="DATE" />
+    <result column="user_deptid" property="userDeptid" jdbcType="INTEGER" />
+    <result column="user_mobile" property="userMobile" jdbcType="CHAR" />
+    <result column="user_role" property="userRole" jdbcType="INTEGER" />
+    <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+    <result column="user_imgpath" property="userImgpath" jdbcType="CHAR" />
+    <result column="user_mz" property="userMz" jdbcType="CHAR" />
+    <result column="user_jg" property="userJg" jdbcType="CHAR" />
+    <result column="user_marrige" property="userMarrige" jdbcType="CHAR" />
+    <result column="user_address" property="userAddress" jdbcType="CHAR" />
+    <result column="user_xl" property="userXl" jdbcType="CHAR" />
+    <result column="user_school" property="userSchool" jdbcType="CHAR" />
+    <result column="user_zy" property="userZy" jdbcType="CHAR" />
+    <result column="user_joinwork" property="userJoinwork" jdbcType="DATE" />
+    <result column="user_email" property="userEmail" jdbcType="CHAR" />
+    <result column="user_joincompany" property="userJoincompany" jdbcType="DATE" />
+    <result column="user_phone" property="userPhone" jdbcType="CHAR" />
+    <result column="user_zzmm" property="userZzmm" jdbcType="CHAR" />
+    <result column="user_joinparty" property="userJoinparty" jdbcType="DATE" />
+    <result column="user_partyplace" property="userPartyplace" jdbcType="CHAR" />
+    <result column="user_glxs" property="userGlxs" jdbcType="CHAR" />
+    <result column="user_insurance" property="userInsurance" jdbcType="INTEGER" />
+    <result column="user_insurancetype" property="userInsurancetype" jdbcType="CHAR" />
+    <result column="user_homeaddress" property="userHomeaddress" jdbcType="CHAR" />
+    <result column="user_lxr" property="userLxr" jdbcType="CHAR" />
+    <result column="user_homephone" property="userHomephone" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    user_id, user_name, user_pwd, user_gender, user_birth, user_deptid, user_mobile, 
+    user_role, user_status, user_imgpath, user_mz, user_jg, user_marrige, user_address, 
+    user_xl, user_school, user_zy, user_joinwork, user_email, user_joincompany, user_phone, 
+    user_zzmm, user_joinparty, user_partyplace, user_glxs, user_insurance, user_insurancetype, 
+    user_homeaddress, user_lxr, user_homephone
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from oa_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from oa_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="OA_User" >
+    insert into oa_user (user_id, user_name, user_pwd, 
+      user_gender, user_birth, user_deptid, 
+      user_mobile, user_role, user_status, 
+      user_imgpath, user_mz, user_jg, 
+      user_marrige, user_address, user_xl, 
+      user_school, user_zy, user_joinwork, 
+      user_email, user_joincompany, user_phone, 
+      user_zzmm, user_joinparty, user_partyplace, 
+      user_glxs, user_insurance, user_insurancetype, 
+      user_homeaddress, user_lxr, user_homephone
+      )
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=CHAR}, #{userPwd,jdbcType=CHAR}, 
+      #{userGender,jdbcType=INTEGER}, #{userBirth,jdbcType=DATE}, #{userDeptid,jdbcType=INTEGER}, 
+      #{userMobile,jdbcType=CHAR}, #{userRole,jdbcType=INTEGER}, #{userStatus,jdbcType=INTEGER}, 
+      #{userImgpath,jdbcType=CHAR}, #{userMz,jdbcType=CHAR}, #{userJg,jdbcType=CHAR}, 
+      #{userMarrige,jdbcType=CHAR}, #{userAddress,jdbcType=CHAR}, #{userXl,jdbcType=CHAR}, 
+      #{userSchool,jdbcType=CHAR}, #{userZy,jdbcType=CHAR}, #{userJoinwork,jdbcType=DATE}, 
+      #{userEmail,jdbcType=CHAR}, #{userJoincompany,jdbcType=DATE}, #{userPhone,jdbcType=CHAR}, 
+      #{userZzmm,jdbcType=CHAR}, #{userJoinparty,jdbcType=DATE}, #{userPartyplace,jdbcType=CHAR}, 
+      #{userGlxs,jdbcType=CHAR}, #{userInsurance,jdbcType=INTEGER}, #{userInsurancetype,jdbcType=CHAR}, 
+      #{userHomeaddress,jdbcType=CHAR}, #{userLxr,jdbcType=CHAR}, #{userHomephone,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="OA_User" >
+    insert into oa_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userPwd != null" >
+        user_pwd,
+      </if>
+      <if test="userGender != null" >
+        user_gender,
+      </if>
+      <if test="userBirth != null" >
+        user_birth,
+      </if>
+      <if test="userDeptid != null" >
+        user_deptid,
+      </if>
+      <if test="userMobile != null" >
+        user_mobile,
+      </if>
+      <if test="userRole != null" >
+        user_role,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="userImgpath != null" >
+        user_imgpath,
+      </if>
+      <if test="userMz != null" >
+        user_mz,
+      </if>
+      <if test="userJg != null" >
+        user_jg,
+      </if>
+      <if test="userMarrige != null" >
+        user_marrige,
+      </if>
+      <if test="userAddress != null" >
+        user_address,
+      </if>
+      <if test="userXl != null" >
+        user_xl,
+      </if>
+      <if test="userSchool != null" >
+        user_school,
+      </if>
+      <if test="userZy != null" >
+        user_zy,
+      </if>
+      <if test="userJoinwork != null" >
+        user_joinwork,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="userJoincompany != null" >
+        user_joincompany,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userZzmm != null" >
+        user_zzmm,
+      </if>
+      <if test="userJoinparty != null" >
+        user_joinparty,
+      </if>
+      <if test="userPartyplace != null" >
+        user_partyplace,
+      </if>
+      <if test="userGlxs != null" >
+        user_glxs,
+      </if>
+      <if test="userInsurance != null" >
+        user_insurance,
+      </if>
+      <if test="userInsurancetype != null" >
+        user_insurancetype,
+      </if>
+      <if test="userHomeaddress != null" >
+        user_homeaddress,
+      </if>
+      <if test="userLxr != null" >
+        user_lxr,
+      </if>
+      <if test="userHomephone != null" >
+        user_homephone,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=CHAR},
+      </if>
+      <if test="userPwd != null" >
+        #{userPwd,jdbcType=CHAR},
+      </if>
+      <if test="userGender != null" >
+        #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userBirth != null" >
+        #{userBirth,jdbcType=DATE},
+      </if>
+      <if test="userDeptid != null" >
+        #{userDeptid,jdbcType=INTEGER},
+      </if>
+      <if test="userMobile != null" >
+        #{userMobile,jdbcType=CHAR},
+      </if>
+      <if test="userRole != null" >
+        #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userImgpath != null" >
+        #{userImgpath,jdbcType=CHAR},
+      </if>
+      <if test="userMz != null" >
+        #{userMz,jdbcType=CHAR},
+      </if>
+      <if test="userJg != null" >
+        #{userJg,jdbcType=CHAR},
+      </if>
+      <if test="userMarrige != null" >
+        #{userMarrige,jdbcType=CHAR},
+      </if>
+      <if test="userAddress != null" >
+        #{userAddress,jdbcType=CHAR},
+      </if>
+      <if test="userXl != null" >
+        #{userXl,jdbcType=CHAR},
+      </if>
+      <if test="userSchool != null" >
+        #{userSchool,jdbcType=CHAR},
+      </if>
+      <if test="userZy != null" >
+        #{userZy,jdbcType=CHAR},
+      </if>
+      <if test="userJoinwork != null" >
+        #{userJoinwork,jdbcType=DATE},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=CHAR},
+      </if>
+      <if test="userJoincompany != null" >
+        #{userJoincompany,jdbcType=DATE},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=CHAR},
+      </if>
+      <if test="userZzmm != null" >
+        #{userZzmm,jdbcType=CHAR},
+      </if>
+      <if test="userJoinparty != null" >
+        #{userJoinparty,jdbcType=DATE},
+      </if>
+      <if test="userPartyplace != null" >
+        #{userPartyplace,jdbcType=CHAR},
+      </if>
+      <if test="userGlxs != null" >
+        #{userGlxs,jdbcType=CHAR},
+      </if>
+      <if test="userInsurance != null" >
+        #{userInsurance,jdbcType=INTEGER},
+      </if>
+      <if test="userInsurancetype != null" >
+        #{userInsurancetype,jdbcType=CHAR},
+      </if>
+      <if test="userHomeaddress != null" >
+        #{userHomeaddress,jdbcType=CHAR},
+      </if>
+      <if test="userLxr != null" >
+        #{userLxr,jdbcType=CHAR},
+      </if>
+      <if test="userHomephone != null" >
+        #{userHomephone,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="OA_User" >
+    update oa_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=CHAR},
+      </if>
+      <if test="userPwd != null" >
+        user_pwd = #{userPwd,jdbcType=CHAR},
+      </if>
+      <if test="userGender != null" >
+        user_gender = #{userGender,jdbcType=INTEGER},
+      </if>
+      <if test="userBirth != null" >
+        user_birth = #{userBirth,jdbcType=DATE},
+      </if>
+      <if test="userDeptid != null" >
+        user_deptid = #{userDeptid,jdbcType=INTEGER},
+      </if>
+      <if test="userMobile != null" >
+        user_mobile = #{userMobile,jdbcType=CHAR},
+      </if>
+      <if test="userRole != null" >
+        user_role = #{userRole,jdbcType=INTEGER},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=INTEGER},
+      </if>
+      <if test="userImgpath != null" >
+        user_imgpath = #{userImgpath,jdbcType=CHAR},
+      </if>
+      <if test="userMz != null" >
+        user_mz = #{userMz,jdbcType=CHAR},
+      </if>
+      <if test="userJg != null" >
+        user_jg = #{userJg,jdbcType=CHAR},
+      </if>
+      <if test="userMarrige != null" >
+        user_marrige = #{userMarrige,jdbcType=CHAR},
+      </if>
+      <if test="userAddress != null" >
+        user_address = #{userAddress,jdbcType=CHAR},
+      </if>
+      <if test="userXl != null" >
+        user_xl = #{userXl,jdbcType=CHAR},
+      </if>
+      <if test="userSchool != null" >
+        user_school = #{userSchool,jdbcType=CHAR},
+      </if>
+      <if test="userZy != null" >
+        user_zy = #{userZy,jdbcType=CHAR},
+      </if>
+      <if test="userJoinwork != null" >
+        user_joinwork = #{userJoinwork,jdbcType=DATE},
+      </if>
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=CHAR},
+      </if>
+      <if test="userJoincompany != null" >
+        user_joincompany = #{userJoincompany,jdbcType=DATE},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=CHAR},
+      </if>
+      <if test="userZzmm != null" >
+        user_zzmm = #{userZzmm,jdbcType=CHAR},
+      </if>
+      <if test="userJoinparty != null" >
+        user_joinparty = #{userJoinparty,jdbcType=DATE},
+      </if>
+      <if test="userPartyplace != null" >
+        user_partyplace = #{userPartyplace,jdbcType=CHAR},
+      </if>
+      <if test="userGlxs != null" >
+        user_glxs = #{userGlxs,jdbcType=CHAR},
+      </if>
+      <if test="userInsurance != null" >
+        user_insurance = #{userInsurance,jdbcType=INTEGER},
+      </if>
+      <if test="userInsurancetype != null" >
+        user_insurancetype = #{userInsurancetype,jdbcType=CHAR},
+      </if>
+      <if test="userHomeaddress != null" >
+        user_homeaddress = #{userHomeaddress,jdbcType=CHAR},
+      </if>
+      <if test="userLxr != null" >
+        user_lxr = #{userLxr,jdbcType=CHAR},
+      </if>
+      <if test="userHomephone != null" >
+        user_homephone = #{userHomephone,jdbcType=CHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="OA_User" >
+    update oa_user
+    set user_name = #{userName,jdbcType=CHAR},
+      user_pwd = #{userPwd,jdbcType=CHAR},
+      user_gender = #{userGender,jdbcType=INTEGER},
+      user_birth = #{userBirth,jdbcType=DATE},
+      user_deptid = #{userDeptid,jdbcType=INTEGER},
+      user_mobile = #{userMobile,jdbcType=CHAR},
+      user_role = #{userRole,jdbcType=INTEGER},
+      user_status = #{userStatus,jdbcType=INTEGER},
+      user_imgpath = #{userImgpath,jdbcType=CHAR},
+      user_mz = #{userMz,jdbcType=CHAR},
+      user_jg = #{userJg,jdbcType=CHAR},
+      user_marrige = #{userMarrige,jdbcType=CHAR},
+      user_address = #{userAddress,jdbcType=CHAR},
+      user_xl = #{userXl,jdbcType=CHAR},
+      user_school = #{userSchool,jdbcType=CHAR},
+      user_zy = #{userZy,jdbcType=CHAR},
+      user_joinwork = #{userJoinwork,jdbcType=DATE},
+      user_email = #{userEmail,jdbcType=CHAR},
+      user_joincompany = #{userJoincompany,jdbcType=DATE},
+      user_phone = #{userPhone,jdbcType=CHAR},
+      user_zzmm = #{userZzmm,jdbcType=CHAR},
+      user_joinparty = #{userJoinparty,jdbcType=DATE},
+      user_partyplace = #{userPartyplace,jdbcType=CHAR},
+      user_glxs = #{userGlxs,jdbcType=CHAR},
+      user_insurance = #{userInsurance,jdbcType=INTEGER},
+      user_insurancetype = #{userInsurancetype,jdbcType=CHAR},
+      user_homeaddress = #{userHomeaddress,jdbcType=CHAR},
+      user_lxr = #{userLxr,jdbcType=CHAR},
+      user_homephone = #{userHomephone,jdbcType=CHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,20 @@
+package com.huawei.dao;
+
+import java.util.List;
+
+import com.huawei.model.Person;
+
+public interface PersonMapper {
+    /**
+     * 插入一条记录
+     * @param person
+     * @return 
+     */
+    boolean insert(Person person);
+    
+    /**
+     * 查询所有
+     * @return
+     */
+    List<Person> queryAll();
+}
